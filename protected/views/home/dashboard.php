@@ -1,0 +1,1 @@
+<h1>This is a default view file and This is the message from the controller --- <?php echo $message ?> ---</h1>
