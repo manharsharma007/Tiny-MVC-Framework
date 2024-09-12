@@ -24,7 +24,10 @@ final class donut {
 
     }
     public static function init() {
-        Loader::load('setting','framework/core');        
+
+        Loader::load('setting', 'framework/core');
+        Loader::load('translate', 'framework/core');
+
         Loader::load('database', LIB);  
         Loader::load('crud', LIB);          
         Loader::load('UserAgent', LIB);
@@ -43,6 +46,7 @@ final class donut {
         // unregister globals
         Helpers::unregisterGlobals();
 
+        $GLOBALS['lang'] = new Translator('en');
         $router = new Router();
         $router->route();
     }

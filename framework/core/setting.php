@@ -20,6 +20,7 @@ define('UTILS',ROOT.'/framework/utils');
 define('CONTROLLERS',ROOT.DS.'protected/controllers');
 define('MODELS',ROOT.DS.'protected/models');
 define('VIEWS',ROOT.DS.'protected/views');
+define('TRANSLATE_DIR',ROOT.DS.'protected/config');
 
 defined('ADMIN_EMAIL') or die('Parameters missing in config file');
 defined('SITE') or die('Parameters missing in config file');

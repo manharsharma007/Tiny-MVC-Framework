@@ -17,7 +17,7 @@ abstract class security {
 	
 	protected function sanitize($arg1) {
 		$arg1 = rtrim(ltrim($arg1,' '),' ');
-		return filter_var(filter_var(filter_var($arg1, FILTER_SANITIZE_STRING),FILTER_SANITIZE_MAGIC_QUOTES),FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+		return filter_var(filter_var(htmlspecialchars($arg1),FILTER_SANITIZE_ADD_SLASHES),FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 	}
 
 	protected function pass_generator() {
@@ -79,11 +79,9 @@ abstract class security {
 
 	}
 
-	protected function check_date($date, $format = 'Y-m-d')
-	{
-	    $d = DateTime::createFromFormat($format, $date);
-	    // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
-	    return $d && $d->format($format) === $date;
+	protected function set_title($value, &$page_title) {
+		$page_title = $value;
+		return true;
 	}
 
 	protected function send_mail($user_mail, $subject, $message, $is_html = false) // function to send mail.
@@ -150,7 +148,6 @@ abstract class security {
 		$menu .= '</ul>';
 		return $menu;
 	}
-
 	public function name_generator() {
 		$array = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
 		$pass = mt_rand(1000,5000).$array[mt_rand(0,25)].$array[mt_rand(0,25)].$array[mt_rand(0,25)].$array[mt_rand(0,25)].$array[mt_rand(0,25)].mt_rand(1000,5000).mt_rand(1000,5000);
@@ -163,9 +160,9 @@ abstract class security {
 		return $pass;
 	}
 
-	protected function create_string($array, $delimiter = ',') {
+	protected function create_string($array) {
 		if(is_array($array))
-			return implode($delimiter, $array);
+			return implode(',',$array);
 		return $array;
 	}
 
@@ -222,11 +219,9 @@ abstract class security {
 		session::clean_data('security_token');
 	}
 
-
-
 }
 
-// Misc Functions
+
 function get_excerpt($string)
 {
 	return (strlen($string) > 155) ? substr($string,0,150).'...' : $string;

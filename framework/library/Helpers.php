@@ -40,27 +40,25 @@ class Helpers{
     
     /** Check for Magic Quotes and remove them **/
     public static function stripSlashesDeep($value) {
-        $value = is_array($value) ? array_map(self::stripSlashesDeep, $value) : stripslashes($value);
+        $value = is_array($value) ? array_map(['Helpers', 'stripSlashesDeep'], $value) : stripslashes($value);
         return $value;
     }
     /**
     * Check for Magic Quotes and remove them
     */
     public static function removeMagicQuotes() {
-        if (get_magic_quotes_gpc() ) {
-        	if(isset($_GET)){
-        		$_GET    = self::stripSlashesDeep($_GET);
-        	}
+    	if(isset($_GET)){
+    		$_GET    = self::stripSlashesDeep($_GET);
+    	}
+        
+		if(isset($_POST)){
+    		$_POST   = self::stripSlashesDeep($_POST);
+    	}
+        
+		if(isset($_COOKIE)){
+    		$_COOKIE = self::stripSlashesDeep($_COOKIE);
+    	}
             
-			if(isset($_POST)){
-        		$_POST   = self::stripSlashesDeep($_POST);
-        	}
-            
-			if(isset($_COOKIE)){
-        		$_COOKIE = self::stripSlashesDeep($_COOKIE);
-        	}
-            
-        }
     }
     
     public static function isLocalhost(){

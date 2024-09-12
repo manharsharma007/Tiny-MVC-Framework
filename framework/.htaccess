@@ -1,0 +1,2 @@
+ErrorDocument 403  "<H1>403! Forbidden</H1>"
+Deny from all
